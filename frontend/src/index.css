@@ -1,0 +1,199 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #e8f4fd;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Sky background */
+.sky-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #87CEEB 0%, #b0e0f5 50%, #e8f4fd 100%);
+  z-index: -2;
+}
+
+/* Cloud base styles */
+.cloud {
+  position: fixed;
+  z-index: -1;
+  opacity: 0.85;
+  animation: floatCloud linear infinite;
+}
+
+.cloud-shape {
+  background: #fff;
+  border-radius: 50px;
+  position: relative;
+}
+
+.cloud-shape::before,
+.cloud-shape::after {
+  content: '';
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+}
+
+/* Cloud 1 — large slow */
+.cloud-1 {
+  top: 8%;
+  left: -300px;
+  animation-duration: 35s;
+  animation-delay: 0s;
+}
+.cloud-1 .cloud-shape {
+  width: 200px;
+  height: 55px;
+}
+.cloud-1 .cloud-shape::before {
+  width: 90px;
+  height: 90px;
+  top: -45px;
+  left: 30px;
+}
+.cloud-1 .cloud-shape::after {
+  width: 60px;
+  height: 60px;
+  top: -30px;
+  left: 100px;
+}
+
+/* Cloud 2 — medium */
+.cloud-2 {
+  top: 25%;
+  left: -250px;
+  animation-duration: 45s;
+  animation-delay: 8s;
+  opacity: 0.7;
+}
+.cloud-2 .cloud-shape {
+  width: 160px;
+  height: 45px;
+}
+.cloud-2 .cloud-shape::before {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 25px;
+}
+.cloud-2 .cloud-shape::after {
+  width: 50px;
+  height: 50px;
+  top: -25px;
+  left: 85px;
+}
+
+/* Cloud 3 — small fast */
+.cloud-3 {
+  top: 42%;
+  left: -200px;
+  animation-duration: 28s;
+  animation-delay: 15s;
+  opacity: 0.6;
+}
+.cloud-3 .cloud-shape {
+  width: 120px;
+  height: 35px;
+}
+.cloud-3 .cloud-shape::before {
+  width: 55px;
+  height: 55px;
+  top: -28px;
+  left: 18px;
+}
+.cloud-3 .cloud-shape::after {
+  width: 40px;
+  height: 40px;
+  top: -20px;
+  left: 65px;
+}
+
+/* Cloud 4 — large */
+.cloud-4 {
+  top: 58%;
+  left: -280px;
+  animation-duration: 50s;
+  animation-delay: 3s;
+  opacity: 0.75;
+}
+.cloud-4 .cloud-shape {
+  width: 220px;
+  height: 60px;
+}
+.cloud-4 .cloud-shape::before {
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  left: 35px;
+}
+.cloud-4 .cloud-shape::after {
+  width: 70px;
+  height: 70px;
+  top: -35px;
+  left: 120px;
+}
+
+/* Cloud 5 — tiny */
+.cloud-5 {
+  top: 72%;
+  left: -150px;
+  animation-duration: 38s;
+  animation-delay: 20s;
+  opacity: 0.55;
+}
+.cloud-5 .cloud-shape {
+  width: 100px;
+  height: 30px;
+}
+.cloud-5 .cloud-shape::before {
+  width: 45px;
+  height: 45px;
+  top: -22px;
+  left: 15px;
+}
+.cloud-5 .cloud-shape::after {
+  width: 35px;
+  height: 35px;
+  top: -17px;
+  left: 55px;
+}
+
+/* Cloud 6 */
+.cloud-6 {
+  top: 88%;
+  left: -200px;
+  animation-duration: 42s;
+  animation-delay: 12s;
+  opacity: 0.65;
+}
+.cloud-6 .cloud-shape {
+  width: 150px;
+  height: 40px;
+}
+.cloud-6 .cloud-shape::before {
+  width: 65px;
+  height: 65px;
+  top: -32px;
+  left: 22px;
+}
+.cloud-6 .cloud-shape::after {
+  width: 48px;
+  height: 48px;
+  top: -24px;
+  left: 88px;
+}
+
+@keyframes floatCloud {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(calc(100vw + 400px)); }
+}
