@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000/api/aqi';
+const BASE_URL = 'https://quxat-air-quality.onrender.com/api/aqi';
 
 export const getAllStations = async () => {
   const response = await axios.get(`${BASE_URL}/all`);

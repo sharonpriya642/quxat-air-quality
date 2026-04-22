@@ -6,7 +6,10 @@ app = FastAPI(title="Andhra AQI API")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=[
+  "http://localhost:5173",
+  "https://glowing-bunny-23d324.netlify.app"
+],
     allow_methods=["*"],
     allow_headers=["*"],
 )
