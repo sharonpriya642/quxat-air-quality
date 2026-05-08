@@ -5,57 +5,57 @@ function AQIScale() {
       range: '0 to 50',
       color: '#00e400',
       bg: '#f0fff4',
-      description: 'The air is fresh and free from toxins. Enjoy outdoor activities without any health concerns.',
+      description: 'Air quality is good and poses little or no risk. Enjoy outdoor activities freely.',
       icon: '😊',
     },
     {
-      category: 'Moderate',
+      category: 'Satisfactory',
       range: '51 to 100',
-      color: '#ffff00',
-      bg: '#fffff0',
-      description: 'Air quality is acceptable for most, but sensitive individuals might experience mild discomfort.',
+      color: '#90ee90',
+      bg: '#f0fff4',
+      description: 'Air quality is acceptable. Unusually sensitive people should consider limiting prolonged outdoor activity.',
       icon: '🙂',
     },
     {
-      category: 'Unhealthy for Sensitive Groups',
-      range: '101 to 150',
-      color: '#ff7e00',
-      bg: '#fffaf0',
-      description: 'Breathing may become slightly uncomfortable, especially for those with respiratory issues.',
+      category: 'Moderate',
+      range: '101 to 200',
+      color: '#ffff00',
+      bg: '#fffff0',
+      description: 'People with respiratory issues, heart disease, children and elderly should avoid prolonged outdoor activity.',
       icon: '😐',
     },
     {
-      category: 'Unhealthy',
-      range: '151 to 200',
+      category: 'Poor',
+      range: '201 to 300',
+      color: '#ff7e00',
+      bg: '#fffaf0',
+      description: 'Everyone should limit outdoor activity. People with lung or heart disease should stay indoors.',
+      icon: '😟',
+    },
+    {
+      category: 'Very Poor',
+      range: '301 to 400',
       color: '#ff0000',
       bg: '#fff5f5',
-      description: 'This air quality is particularly risky for children, pregnant women, and the elderly. Limit outdoor activities.',
-      icon: '😷',
+      description: 'Avoid all outdoor physical activity. People with lung or heart disease, children and elderly must stay indoors.',
+      icon: '😨',
     },
     {
-      category: 'Very Unhealthy',
-      range: '201 to 300',
-      color: '#8f3f97',
-      bg: '#faf5ff',
-      description: 'Prolonged exposure can cause chronic health issues or organ damage. Avoid outdoor activities.',
-      icon: '🤢',
-    },
-    {
-      category: 'Hazardous',
-      range: '301+',
+      category: 'Severe',
+      range: '401+',
       color: '#7e0023',
       bg: '#fff5f5',
-      description: 'Dangerously high pollution levels. Life-threatening health risks. Stay indoors immediately.',
-      icon: '☠️',
+      description: 'Dangerously high pollution. Life-threatening health risks. Stay indoors immediately. Keep windows closed.',
+      icon: '🚨',
     },
   ];
 
   const pollutants = [
-    { name: 'PM2.5', who: '5', india: '15', unit: 'µg/m³', desc: 'Fine particles that penetrate deep into lungs' },
-    { name: 'PM10',  who: '15', india: '60', unit: 'µg/m³', desc: 'Coarse particles affecting breathing' },
-    { name: 'O₃',   who: '60', india: '100', unit: 'µg/m³', desc: 'Ground-level ozone causing respiratory irritation' },
-    { name: 'NO₂',  who: '10', india: '40', unit: 'µg/m³', desc: 'Nitrogen dioxide from vehicle emissions' },
-    { name: 'SO₂',  who: '15', india: '50', unit: 'µg/m³', desc: 'Sulphur dioxide from industrial sources' },
+    { name: 'PM2.5', who: '5',    india: '15',   unit: 'µg/m³', desc: 'Fine particles that penetrate deep into lungs' },
+    { name: 'PM10',  who: '15',   india: '60',   unit: 'µg/m³', desc: 'Coarse particles affecting breathing' },
+    { name: 'O₃',   who: '60',   india: '100',  unit: 'µg/m³', desc: 'Ground-level ozone causing respiratory irritation' },
+    { name: 'NO₂',  who: '10',   india: '40',   unit: 'µg/m³', desc: 'Nitrogen dioxide from vehicle emissions' },
+    { name: 'SO₂',  who: '15',   india: '50',   unit: 'µg/m³', desc: 'Sulphur dioxide from industrial sources' },
     { name: 'CO',   who: '4000', india: '2000', unit: 'µg/m³', desc: 'Carbon monoxide from combustion' },
   ];
 
@@ -70,8 +70,11 @@ function AQIScale() {
       <h3 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '4px' }}>
         📊 Air Quality Index Scale
       </h3>
-      <p style={{ fontSize: '12px', color: '#888', marginBottom: '20px' }}>
-        Standard AQI categories and health implications
+      <p style={{ fontSize: '12px', color: '#888', marginBottom: '4px' }}>
+        Indian National AQI (NAQI) categories and health implications
+      </p>
+      <p style={{ fontSize: '11px', color: '#3182ce', marginBottom: '20px', fontWeight: '500' }}>
+        🇮🇳 Based on Indian CPCB (Central Pollution Control Board) standards
       </p>
 
       {/* AQI Level rows */}
@@ -93,11 +96,12 @@ function AQIScale() {
             borderRadius: '50%',
             background: level.color,
             flexShrink: 0,
-            border: level.color === '#ffff00' ? '1px solid #e0c800' : 'none',
+            border: level.color === '#ffff00' || level.color === '#90ee90'
+              ? '1px solid #ccc' : 'none',
           }} />
 
           {/* Category + range */}
-          <div style={{ minWidth: '220px' }}>
+          <div style={{ minWidth: '160px' }}>
             <p style={{ fontSize: '14px', fontWeight: '600', color: '#2d3748', margin: 0 }}>
               {level.category}
             </p>

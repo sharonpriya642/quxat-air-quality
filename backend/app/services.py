@@ -48,20 +48,33 @@ ANDHRA_STATIONS = [
 
 def convert_aqi(components):
     pm25 = components.get("pm2_5", 0)
-    if pm25 <= 12:    return round((50 / 12) * pm25)
-    if pm25 <= 35.4:  return round(50 + ((100 - 51) / (35.4 - 12.1)) * (pm25 - 12.1))
-    if pm25 <= 55.4:  return round(101 + ((150 - 101) / (55.4 - 35.5)) * (pm25 - 35.5))
-    if pm25 <= 150.4: return round(151 + ((200 - 151) / (150.4 - 55.5)) * (pm25 - 55.5))
-    if pm25 <= 250.4: return round(201 + ((300 - 201) / (250.4 - 150.5)) * (pm25 - 150.5))
-    return round(301 + ((500 - 301) / (500 - 250.5)) * (pm25 - 250.5))
+    pm10 = components.get("pm10", 0)
+
+    def pm25_sub(c):
+        if c <= 30:  return round((50 / 30) * c)
+        if c <= 60:  return round(50  + (50 / 30)   * (c - 30))
+        if c <= 90:  return round(100 + (100 / 30)  * (c - 60))
+        if c <= 120: return round(200 + (100 / 30)  * (c - 90))
+        if c <= 250: return round(300 + (100 / 130) * (c - 120))
+        return       round(400 + (100 / 130) * (c - 250))
+
+    def pm10_sub(c):
+        if c <= 50:  return round(c)
+        if c <= 100: return round(50  + (c - 50))
+        if c <= 250: return round(100 + (100 / 150) * (c - 100))
+        if c <= 350: return round(200 + (c - 250))
+        if c <= 430: return round(300 + (100 / 80)  * (c - 350))
+        return       round(400 + (100 / 80) * (c - 430))
+
+    return max(pm25_sub(pm25), pm10_sub(pm10))
 
 def get_aqi_category(aqi):
-    if aqi <= 50:  return {"category": "Good",                           "color": "#00e400", "advice": "Air quality is satisfactory. Enjoy outdoor activities."}
-    if aqi <= 100: return {"category": "Moderate",                       "color": "#ffff00", "advice": "Sensitive people should consider reducing outdoor activity."}
-    if aqi <= 150: return {"category": "Unhealthy for Sensitive Groups",  "color": "#ff7e00", "advice": "People with respiratory conditions should limit outdoor activity."}
-    if aqi <= 200: return {"category": "Unhealthy",                      "color": "#ff0000", "advice": "Everyone should reduce prolonged outdoor activity."}
-    if aqi <= 300: return {"category": "Very Unhealthy",                 "color": "#8f3f97", "advice": "Avoid outdoor activity. Keep windows closed."}
-    return              {"category": "Hazardous",                        "color": "#7e0023", "advice": "Stay indoors. Avoid all outdoor physical activity."}
+    if aqi <= 50:  return {"category": "Good",         "color": "#00e400", "advice": "Air quality is good. Enjoy outdoor activities freely."}
+    if aqi <= 100: return {"category": "Satisfactory",  "color": "#90ee90", "advice": "Air quality is acceptable. Unusually sensitive people should consider limiting prolonged outdoor activity."}
+    if aqi <= 200: return {"category": "Moderate",      "color": "#ffff00", "advice": "People with respiratory issues, heart disease, children and elderly should avoid prolonged outdoor activity."}
+    if aqi <= 300: return {"category": "Poor",          "color": "#ff7e00", "advice": "People with lung or heart disease, children and elderly should avoid outdoor activity. Others should limit outdoor activity."}
+    if aqi <= 400: return {"category": "Very Poor",     "color": "#ff0000", "advice": "Avoid all outdoor physical activity. People with lung or heart disease, children and elderly should stay indoors."}
+    return              {  "category": "Severe",        "color": "#7e0023", "advice": "Stay indoors. Avoid all outdoor activity. Keep windows and doors closed."}
 
 async def fetch_station_aqi(station):
     url = f"https://api.openweathermap.org/data/2.5/air_pollution?lat={station['lat']}&lon={station['lon']}&appid={API_KEY}"

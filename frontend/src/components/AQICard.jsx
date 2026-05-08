@@ -61,7 +61,7 @@ function AQICard({ station }) {
             }}>
               {station.aqi}
             </span>
-            <span style={{ fontSize: '13px', color: '#999' }}>AQI (US)</span>
+            <span style={{ fontSize: '13px', color: '#999' }}>AQI (india)</span>
           </div>
         </div>
 
