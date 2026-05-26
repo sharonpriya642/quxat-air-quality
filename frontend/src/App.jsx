@@ -21,6 +21,9 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
+  const [locating, setLocating] = useState(false);
+  const [locationMsg, setLocationMsg] = useState('');
+  
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -48,6 +51,41 @@ function App() {
   const handleStationChange = (e) => {
     const index = parseInt(e.target.value);
     setSelected(stations[index]);
+  };
+  const handleAutoDetect = () => {
+    if (!navigator.geolocation) {
+      setLocationMsg('Geolocation not supported by your browser');
+      return;
+    }
+    setLocating(true);
+    setLocationMsg('');
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const nearest = stations.reduce((closest, station) => {
+          const dist = Math.sqrt(
+            Math.pow(station.lat - latitude, 2) +
+            Math.pow(station.lon - longitude, 2)
+          );
+          const closestDist = Math.sqrt(
+            Math.pow(closest.lat - latitude, 2) +
+            Math.pow(closest.lon - longitude, 2)
+          );
+          return dist < closestDist ? station : closest;
+        });
+        const index = stations.findIndex(s => s.station === nearest.station);
+        const select = document.querySelector('select');
+        if (select) select.value = index;
+        setSelected(nearest);
+        setLocationMsg(`📍 Nearest: ${nearest.station}`);
+        setLocating(false);
+      },
+      () => {
+        setLocationMsg('Location access denied.');
+        setLocating(false);
+      }
+    );
   };
 
   if (!user) return <Auth onLogin={setUser} />;
@@ -191,7 +229,31 @@ function App() {
           </select>
           <span style={{ fontSize: '13px', color: '#888' }}>
             Showing live AQI for {stations.length} Andhra Pradesh stations
-          </span>
+          </span><button
+            onClick={handleAutoDetect}
+            disabled={locating}
+            style={{
+              padding: '8px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              background: locating ? '#90cdf4' : '#2b6cb0',
+              color: '#fff',
+              fontSize: '13px',
+              fontWeight: '500',
+              cursor: locating ? 'not-allowed' : 'pointer',
+            }}>
+            {locating ? '🔍 Detecting...' : '🎯 Auto Detect Location'}
+          </button>
+
+          {locationMsg && (
+            <span style={{
+              fontSize: '13px',
+              color: locationMsg.includes('denied') ? '#e53e3e' : '#38a169',
+              fontWeight: '500',
+            }}>
+              {locationMsg}
+            </span>
+          )}
           {stations.length > 0 && (() => {
             const highest = stations.reduce((a, b) => a.aqi > b.aqi ? a : b);
             const lowest  = stations.reduce((a, b) => a.aqi < b.aqi ? a : b);
