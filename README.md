@@ -118,20 +118,6 @@ The dashboard provides:
 - Help users make informed decisions based on AQI and weather conditions.
 
 ---
-
-## 📸 Screenshots
-
-Add screenshots of:
-
-- Home Page
-- AQI Dashboard
-- City Search
-- Weather Information
-- AQI Gauge
-- Health Recommendation Section
-
----
-
 ## 🔮 Future Enhancements
 
 - Historical AQI trends
@@ -150,7 +136,7 @@ Add screenshots of:
 **Alla Sharon Priyanka**
 
 - GitHub: https://github.com/sharonpriya642
-- LinkedIn: *(Add your LinkedIn profile link here)*
+- LinkedIn: www.linkedin.com/in/alla-sharon-priyanka-9b3766354
 
 ---
 
