@@ -1,6 +1,6 @@
 # 🌍 QuXAT Air – Real-Time Air Quality Monitoring System
 
-QuXAT Air is a web-based air quality monitoring application that provides users with real-time Air Quality Index (AQI), weather conditions, and pollutant information for cities across India. The application helps users understand current air quality levels and promotes awareness of environmental health through interactive visualizations and location-based insights.
+QuXAT Air is a web-based air quality monitoring application that provides users with real-time Air Quality Index (AQI), weather conditions, and pollutant information for cities across in Andhra Pradesh. The application helps users understand current air quality levels and promotes awareness of environmental health through interactive visualizations and location-based insights.
 
 ---
 
@@ -23,6 +23,7 @@ QuXAT Air is a web-based air quality monitoring application that provides users 
 - Streamlit
 - HTML
 - CSS
+- React.js
 
 ### Backend
 - Python
